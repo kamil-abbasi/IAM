@@ -1,6 +1,6 @@
-import express from "express";
+import express, { type Response } from "express";
 
-import { setupEnv } from "@/config/env";
+import { setupEnv } from "@/env";
 import middleware from "@/middleware";
 import { Container } from "@/container";
 
@@ -15,6 +15,10 @@ async function bootstrap() {
 
 	app.listen(env.PORT, () => {
 		container.logger.info(`Http server is listening on port ${env.PORT}`);
+	});
+
+	app.get("healthcheck", (req, res: Response) => {
+		res.json({ message: "I'm fine" });
 	});
 }
 
